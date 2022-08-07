@@ -41,7 +41,7 @@ time = "night"
 # hospital = "Peterborough"
 # refernce = ""
 pt_age = "27"
-age_units = "Years"
+age_units = "years"
 
 # Fill date
 day = driver.find_element(By.ID, "dynamic_date_dd")
@@ -81,24 +81,7 @@ else:
 
 # Age
 driver.find_element(By.ID, "dynamic_patient-age").send_keys(pt_age)
-
-# Age units
-'''failing due to Element <option> could not be scrolled into view'''
-# find_age_units = driver.find_element(By.ID, "dynamic_patient-age-units")
-# select_age_units = Select(find_age_units)
-# WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "dynamic_patient-age-units")))
-# select_age_units.select_by_visible_text("Years")
-
-'''fails as element is not reachable by keyboard'''
-# driver.find_element(By.ID, "select2-dynamic_patient-age-units-container").click()
-# driver.find_element(By.ID, "select2-dynamic_patient-age-units-results").send_keys(Keys.ARROW_DOWN)
-
-age_units = driver.find_element(By.ID, "select2-dynamic_patient-age-units-container")
-years = driver.find_element(By.XPATH, "//option[contains(@value, 'years')]") # path valid but doesn't do anything...
-action = ActionChains(driver)
-action.move_to_element(age_units).click()
-action.move_to_element(years).click()
-
-# XPATH to dropdown: //*[@id="select2-dynamic_patient-age-units-results"]
-# XPATH to years (nlsn is dynamic): //*[@id="select2-dynamic_patient-age-units-result-nlsn-years"]
-# Search just for years?: //*[contains(@id, 'years')]
+driver.find_element(By.ID, "select2-dynamic_patient-age-units-container").click()
+WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//li[contains(@id, 'years')]")))
+driver.find_element(By.XPATH, "//li[contains(@id, 'years')]").click() # path only valid after opening dropdown
+# needs XPATH searches for years, months, days - f' strings don't work ?XPATH as variable conditional on age_units
