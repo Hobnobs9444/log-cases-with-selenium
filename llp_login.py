@@ -94,7 +94,7 @@ driver.find_element(By.ID, "dynamic_patient-age").send_keys(pt_age)
 # driver.find_element(By.ID, "select2-dynamic_patient-age-units-results").send_keys(Keys.ARROW_DOWN)
 
 age_units = driver.find_element(By.ID, "select2-dynamic_patient-age-units-container")
-years = driver.find_element(By.XPATH, "//*[contains(@id, 'years')]") # this path isnt valid
+years = driver.find_element(By.XPATH, "//option[contains(@value, 'years')]") # path valid but doesn't do anything...
 action = ActionChains(driver)
 action.move_to_element(age_units).click()
 action.move_to_element(years).click()
