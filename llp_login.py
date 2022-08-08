@@ -2,6 +2,8 @@
 # Aim to integrate with google sheets version of logbook for batch entry
 
 # Functions for:
+# - logging in
+# - opening, filling and submitting logbook entry
 # - yes / no box select
 # - multiple choice box select
 # - dropdown box click and send keys
