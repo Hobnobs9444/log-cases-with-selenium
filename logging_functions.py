@@ -34,9 +34,17 @@ def login(username, password):
 
 def date(dd, mm, yyyy):
     '''enter date of case'''
-    driver.find_element(By.ID, "dynamic_date_dd").clear().send_keys(dd)
-    driver.find_element(By.ID, "dynamic_date_mm").clear().send_keys(mm)
-    driver.find_element(By.ID, "dynamic_date_yyyy").clear().send_keys(yyyy)
+    day = driver.find_element(By.ID, "dynamic_date_dd")
+    day.clear()
+    day.send_keys(dd)
+
+    month = driver.find_element(By.ID, "dynamic_date_mm")
+    month.clear()
+    month.send_keys(mm)
+    
+    year = driver.find_element(By.ID, "dynamic_date_yyyy")
+    year.clear()
+    year.send_keys(yyyy)
 
 def check_box(cat, vars):
     '''check all boxes in a category (cat) defined in list vars, for yes/no selections use this as the var'''
@@ -46,10 +54,13 @@ def check_box(cat, vars):
 
 def search_box(cat, var):
     '''Open dropdown, enter text and confirm'''
-    dropdown_xpath = f"//span[contains(@id, 'select2-dynamic_{cat}')"
+    dropdown_xpath = f"//span[contains(@id, 'select2-dynamic_{cat}')]"
     driver.find_element(By.XPATH, dropdown_xpath).click()
+    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//input[contains(@class, 'select2')]")))
     search_box = driver.find_element(By.XPATH, "//input[contains(@class, 'select2')]")
-    search_box.send_keys(var, Keys.RETURN)
+    search_box.send_keys(var)
+    search_box.send_keys(Keys.RETURN)
+    # This is getting cardiac from somewhere on the 'operation' box...
 
 def text_box():
     #TODO
@@ -66,7 +77,7 @@ time = "night"
 reference = ""
 pt_age = "27"
 age_units = "years"
-asa = 1
+asa = '1'
 day = 'no'
 priority = 'immediate'
 speciality = 'general'
@@ -105,9 +116,9 @@ def main():
     check_box('asa', asa)
     check_box('day-case', day)
     check_box('priority', priority)
-    search_box('speciality', speciality)
+    search_box('primary-specialty', speciality)
     search_box('operation', operation)
-    check_box('secondary-speciality', second)
+    check_box('secondary-specialty', second)
 
     if second == 'yes':
         search_box('secondary-speciality', second_spec)
@@ -129,3 +140,6 @@ def main():
 
     # submit the form
     driver.find_element(By.XPATH, "//button[@class='btn btn-primary']").click()
+
+if __name__ == '__main__':
+    main()
